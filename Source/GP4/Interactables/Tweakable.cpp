@@ -17,5 +17,5 @@ int32 ITweakable::GetTweakFlags()
 
 bool ITweakable::CanBeTweaked()
 {
-	return false;
+	return true;
 }
