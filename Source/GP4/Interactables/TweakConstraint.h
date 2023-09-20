@@ -9,6 +9,8 @@ struct FTweakConstraint
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool Lock;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MinPercentage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxPercentage;

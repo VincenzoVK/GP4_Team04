@@ -19,8 +19,9 @@ ETweakResult UTweak::ApplyTweak(AActor* TweakableObject)
 		Percentage += GetCurrentPercentage(TweakableObject);
 	}
 	Percentage = FMath::Clamp(Percentage, Constraint.MinPercentage, Constraint.MaxPercentage);
-	
-	OnApplyTweak(TweakableObject);
+
+	if(!Constraint.Lock)
+		OnApplyTweak(TweakableObject);
 
 	Percentage = PreviousPercentage;
 	
