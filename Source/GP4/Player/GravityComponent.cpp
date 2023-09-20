@@ -18,6 +18,7 @@ void UGravityComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	UStaticMeshComponent* Mesh = GetOwner()->GetComponentByClass<UStaticMeshComponent>();
-	Mesh->AddForce(FVector::DownVector * (981.f * GravityScale) * Mass);
+	if(Mesh->IsSimulatingPhysics())
+		Mesh->AddForce(FVector::DownVector * (981.f * GravityScale) * Mass);
 }
 

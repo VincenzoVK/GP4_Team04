@@ -23,6 +23,7 @@ public:
 	virtual void OnStartTweaking();
 	virtual void OnEndTweaking();
 	virtual int32 GetTweakFlags();
+	virtual bool CanBeTweaked();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Tweakable")
 	void StartTweaking();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Tweakable")

@@ -14,3 +14,8 @@ int32 ITweakable::GetTweakFlags()
 {
 	return 0;
 }
+
+bool ITweakable::CanBeTweaked()
+{
+	return false;
+}

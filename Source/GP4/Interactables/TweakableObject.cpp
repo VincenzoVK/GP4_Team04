@@ -83,6 +83,9 @@ int32 ATweakableObject::GetTweakFlags()
 
 void ATweakableObject::ReceiveTweak(UTweak* Tweak)
 {
+	if(!IsTweakable)
+		return;
+
 	if(!TweakOverrides.Contains(Tweak->GetClass()))
 	{
 		Tweak->ApplyTweak(this);

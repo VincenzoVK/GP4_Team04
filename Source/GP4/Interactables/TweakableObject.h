@@ -29,6 +29,8 @@ class GP4_API ATweakableObject : public AActor, public ITweakable, public IHover
 public:
 	ATweakableObject();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsTweakable;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Bitmask, BitmaskEnum = ETweakType))
 	int32 TweakFlags;
 	UPROPERTY(EditAnywhere)

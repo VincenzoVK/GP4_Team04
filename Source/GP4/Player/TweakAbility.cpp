@@ -41,10 +41,12 @@ void UTweakAbility::SelectOnly(AActor* Tweakable)
 
 void UTweakAbility::Select(AActor* Tweakable)
 {
-	SelectedTweakables.Add(Tweakable);
 	ITweakable* TweakableInterface = Cast<ITweakable>(Tweakable);
 	if(TweakableInterface)
 	{
+		if(!TweakableInterface->CanBeTweaked())
+			return;
+		SelectedTweakables.Add(Tweakable);
 		SelfSelected = false;
 		TweakableInterface->OnStartTweaking();
 	}
