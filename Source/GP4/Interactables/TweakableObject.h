@@ -46,6 +46,7 @@ public:
 	virtual void BeginDestroy() override;
 	virtual void OnStartTweaking() override;
 	virtual void OnEndTweaking() override;
+	virtual bool CanBeTweaked() override;
 	virtual int32 GetTweakFlags() override;
 	UFUNCTION(BlueprintCallable)
 	virtual void ReceiveTweak(UTweak* Tweak);

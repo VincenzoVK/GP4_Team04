@@ -76,6 +76,11 @@ void ATweakableObject::OnEndTweaking()
 	}
 }
 
+bool ATweakableObject::CanBeTweaked()
+{
+	return IsTweakable;
+}
+
 int32 ATweakableObject::GetTweakFlags()
 {
 	return TweakFlags;
