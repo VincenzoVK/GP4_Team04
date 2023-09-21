@@ -5,12 +5,6 @@
 
 ETweakResult UTweak::ApplyTweak(AActor* TweakableObject)
 {
-	if(UBlueprintUtility::HasTweakingType(TweakableObject, TweakTypes))
-	{
-		//GEngine->AddOnScreenDebugMessage(-1, 4, FColor::White, TEXT("Fail"));
-		//return ETweakResult::Fail;
-	}
-
 	float PreviousPercentage = Percentage;
 	
 	if(PercentageType == ETweakPercentageType::Delta)

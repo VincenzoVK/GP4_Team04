@@ -17,6 +17,7 @@ struct FTweakConstraint
 
 	FTweakConstraint()
 	{
+		Lock = false;
 		MinPercentage = 0;
 		MaxPercentage = 1;
 	}
