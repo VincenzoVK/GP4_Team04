@@ -17,6 +17,7 @@ public:
 	AEnemyProjectile();
 
 	UProjectileMovementComponent* ProjectileMovementComponent;
+	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMeshComponent;
 
 
