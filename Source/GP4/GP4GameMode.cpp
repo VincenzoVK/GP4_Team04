@@ -1,5 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "GP4GameMode.h"
 #include "GP4Character.h"
 #include "UObject/ConstructorHelpers.h"
