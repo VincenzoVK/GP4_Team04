@@ -14,7 +14,7 @@ struct FRoomInfo
 	
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Room")
-	FName RoomID;	
+	int RoomID;	
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Quest")
 	bool IsCompleted;
