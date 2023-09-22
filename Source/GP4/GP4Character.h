@@ -12,6 +12,7 @@
 #include "GP4Character.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FCheckSizeChanged);
+class ACheckPoint;
 
 UCLASS(config=Game)
 class AGP4Character : public ACharacter, public ITweakable
@@ -80,6 +81,10 @@ public:
 	bool IsMultiSelectPressed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Bitmask, BitmaskEnum = ETweakType))
 	int32 TweakFlags;
+	UPROPERTY(BlueprintReadWrite)
+	ACheckPoint* CurrentCheckPoint;
+	UPROPERTY(BlueprintReadWrite)
+	ACheckPoint* PreviousCheckPoint;
 	UPROPERTY(BlueprintReadOnly)
 	TArray<AActor*> ActorsInBoxTrace;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
