@@ -12,6 +12,18 @@ class GP4_API AGP4_MainMenuGameMode : public AGameMode
 protected:
 	virtual void BeginPlay() override;
 
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Menu Events")
+	void OnNewGame(FName MapNameToLoad);
+
+	void OnNewGame_Implementation(FName MapNameToLoad);
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Menu Events")
+	void OnLoadGame(FName MapNameToLoad);
+
+	void OnLoadGame_Implementation(FName MapNameToLoad);
+
 protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Menu")
@@ -19,4 +31,6 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Menu Events")
 	void OnShowMainMenu(bool NewGame);
+
+	
 };

@@ -13,3 +13,54 @@ bool UGP4_GameInstance::IsNewGame()
 	}
 	return true;
 }
+
+bool UGP4_GameInstance::CreateNewSaveGame()
+{
+	if (CurrentSaveGame == nullptr)
+	{
+		USaveGame* NewSaveGame = UGameplayStatics::CreateSaveGameObject(UGP4_MainSaveGame::StaticClass());
+		
+		if (NewSaveGame != nullptr)
+		{
+			CurrentSaveGame = Cast<UGP4_MainSaveGame>(NewSaveGame);
+		}
+	}
+	else
+	{
+		CurrentSaveGame->CreateSlot(UNIQUE_SAVE_SLOT);
+	}
+	
+	return UGameplayStatics::SaveGameToSlot(CurrentSaveGame, UNIQUE_SAVE_SLOT, 0);
+}
+
+bool UGP4_GameInstance::LoadGame()
+{
+	CurrentSaveGame = nullptr;
+
+	USaveGame* Slot = UGameplayStatics::LoadGameFromSlot(UNIQUE_SAVE_SLOT, 0);
+
+	if (Slot != nullptr)
+	{
+		CurrentSaveGame = Cast<UGP4_MainSaveGame>(Slot);
+
+		if (CurrentSaveGame != nullptr)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("[UHowToGameInstance::LoadGame] Success loading %s"), *UNIQUE_SAVE_SLOT);
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool UGP4_GameInstance::SaveGame()
+{
+	
+	if (CurrentSaveGame != nullptr)
+	{
+		return UGameplayStatics::SaveGameToSlot(CurrentSaveGame, UNIQUE_SAVE_SLOT, 0);
+	}	
+
+	return false;
+}
