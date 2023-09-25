@@ -24,7 +24,8 @@ void AGP4_MainMenuGameMode::OnNewGame_Implementation(FName MapNameToLoad)
 	
 	if (GameInstance->CreateNewSaveGame())
 	{
-		UGameplayStatics::OpenLevel(GetWorld(), MapNameToLoad, true);
+		FLatentActionInfo LatentInfo;
+		UGameplayStatics::LoadStreamLevel(GetWorld(), MapNameToLoad, true, false, LatentInfo);
 	}
 }
 

@@ -48,4 +48,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "GP4")
 	void UnloadLevels(UWorld* World, TArray<FName> LevelNames);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void LoadLevelByName();
 };

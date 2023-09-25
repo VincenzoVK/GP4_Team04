@@ -17,15 +17,16 @@ private:
 
 public:
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	UGP4_MainSaveGame* CurrentSaveGame;
 
+	UFUNCTION(BlueprintCallable)
 	bool IsNewGame();
-
+	UFUNCTION(BlueprintCallable)
 	bool CreateNewSaveGame();
-
+	UFUNCTION(BlueprintCallable)
 	bool LoadGame();
-
+	UFUNCTION(BlueprintCallable)
 	bool SaveGame();
 	
 };

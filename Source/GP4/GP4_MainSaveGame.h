@@ -20,6 +20,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FRoomInfo> RoomStatus;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int RoomIndex = 0;
 	
 	void CreateSlot(const FString& SlotName)
 	{
