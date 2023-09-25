@@ -31,5 +31,6 @@ void AGP4_MainMenuGameMode::OnNewGame_Implementation(FName MapNameToLoad)
 
 void AGP4_MainMenuGameMode::OnLoadGame_Implementation(FName MapNameToLoad)
 {
-	UGameplayStatics::OpenLevel(GetWorld(), MapNameToLoad, true);
+	FLatentActionInfo LatentInfo;
+	UGameplayStatics::LoadStreamLevel(GetWorld(), MapNameToLoad, true, false, LatentInfo);
 }

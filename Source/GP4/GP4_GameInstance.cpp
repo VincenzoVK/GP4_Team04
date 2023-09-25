@@ -16,18 +16,11 @@ bool UGP4_GameInstance::IsNewGame()
 
 bool UGP4_GameInstance::CreateNewSaveGame()
 {
-	if (CurrentSaveGame == nullptr)
-	{
-		USaveGame* NewSaveGame = UGameplayStatics::CreateSaveGameObject(UGP4_MainSaveGame::StaticClass());
+	USaveGame* NewSaveGame = UGameplayStatics::CreateSaveGameObject(UGP4_MainSaveGame::StaticClass());
 		
-		if (NewSaveGame != nullptr)
-		{
-			CurrentSaveGame = Cast<UGP4_MainSaveGame>(NewSaveGame);
-		}
-	}
-	else
+	if (NewSaveGame != nullptr)
 	{
-		CurrentSaveGame->CreateSlot(UNIQUE_SAVE_SLOT);
+		CurrentSaveGame = Cast<UGP4_MainSaveGame>(NewSaveGame);
 	}
 	
 	return UGameplayStatics::SaveGameToSlot(CurrentSaveGame, UNIQUE_SAVE_SLOT, 0);
@@ -38,6 +31,10 @@ bool UGP4_GameInstance::LoadGame()
 	CurrentSaveGame = nullptr;
 
 	USaveGame* Slot = UGameplayStatics::LoadGameFromSlot(UNIQUE_SAVE_SLOT, 0);
+	if(!Slot)
+	{
+		CreateNewSaveGame();
+	}
 
 	if (Slot != nullptr)
 	{

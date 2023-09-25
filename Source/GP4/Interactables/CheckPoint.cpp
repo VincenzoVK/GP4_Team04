@@ -1,6 +1,7 @@
 #include "CheckPoint.h"
 
 #include "Engine/LevelStreaming.h"
+#include "GP4/GP4_GameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 ACheckPoint::ACheckPoint()
@@ -34,6 +35,17 @@ void ACheckPoint::NotifyActorBeginOverlap(AActor* OtherActor)
 			Character->CurrentCheckPoint = this;
 
 			LoadLevel(Character);
+			UGP4_GameInstance* GameInstance = Cast<UGP4_GameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+			if (GameInstance)
+			{
+				if(GameInstance->CurrentSaveGame)
+				{
+					GameInstance->CurrentSaveGame->RoomIndex = Index;
+					GameInstance->SaveGame();
+					GEngine->AddOnScreenDebugMessage(-1, 3, FColor::White, FString::FromInt(Index));
+				}
+			}
+			OnReachCheckPoint();
 		}
 	}
 }
@@ -91,11 +103,6 @@ void ACheckPoint::StreamLastLevel()
 {
 	FLatentActionInfo LatentInfo;
 	UGameplayStatics::LoadStreamLevel(GetWorld(), LastLevel, true, false, LatentInfo);
-}
-
-void ACheckPoint::StreamLevels(UWorld* World, TArray<FName> LevelNames)
-{
-	
 }
 
 void ACheckPoint::UnloadLevels(UWorld* World, TArray<FName> LevelNames)
