@@ -20,7 +20,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FRoomInfo> RoomStatus;
-
+	
 	void CreateSlot(const FString& SlotName)
 	{
 		SaveGameName = SlotName;
