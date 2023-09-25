@@ -17,6 +17,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UBoxComponent* Volume;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int Index;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FName> PreviousLevels;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FName> CurrentLevels;
@@ -26,23 +28,24 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	FName LastLevel;
+
 public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 	
 	UFUNCTION(BlueprintCallable, Category = "GP4")
-	static void LoadLevel(AGP4Character* Character);
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GP4")
-	void OnLoadLevel(AGP4Character* Character);
+	void LoadLevel(AGP4Character* Character);
 	
 	UFUNCTION(BlueprintCallable, Category = "GP4")
-	static void ReLoadLevel(AGP4Character* Character);
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "GP4")
-	void OnReLoadLevel(AGP4Character* Character);
+	void ReLoadLevel(AGP4Character* Character);
 	
 	UFUNCTION(BlueprintCallable, Category = "GP4")
-	static void StreamLevels(UWorld* World, TArray<FName> LevelNames);
+	void StreamLevels(UWorld* World, TArray<FName> LevelNames);
+
+	UFUNCTION()
+	void StreamLastLevel();
 	
 	UFUNCTION(BlueprintCallable, Category = "GP4")
-	static void UnloadLevels(UWorld* World, TArray<FName> LevelNames);
+	void UnloadLevels(UWorld* World, TArray<FName> LevelNames);
 };

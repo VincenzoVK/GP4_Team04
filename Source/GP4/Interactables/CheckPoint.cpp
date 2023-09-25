@@ -72,23 +72,37 @@ void ACheckPoint::ReLoadLevel(AGP4Character* Character)
 	NewCharacter->CurrentCheckPoint = Current;
 	UGameplayStatics::GetPlayerController(World, 0)->Possess(NewCharacter);
 
-	if(Current)
+	for (FName LevelName : Current->CurrentLevels)
 	{
-		UnloadLevels(World, Current->CurrentLevels);
-		StreamLevels(World, Current->CurrentLevels);
+		const ULevelStreaming* Streaming = UGameplayStatics::GetStreamingLevel(World, LevelName);
+			
+		if(!Streaming) continue;
+		if(!Streaming->IsLevelVisible()) continue;
+
+		LastLevel = LevelName;
+		FLatentActionInfo LatentInfo;
+		LatentInfo.CallbackTarget = this;
+		LatentInfo.ExecutionFunction = FName("StreamLastLevel");
+		LatentInfo.UUID = 0;
+		LatentInfo.Linkage = 0;
+		UGameplayStatics::UnloadStreamLevel(World, LevelName, LatentInfo, false);
 	}
+}
+
+void ACheckPoint::StreamLastLevel()
+{
+	FLatentActionInfo LatentInfo;
+	UGameplayStatics::LoadStreamLevel(GetWorld(), LastLevel, true, false, LatentInfo);
 }
 
 void ACheckPoint::StreamLevels(UWorld* World, TArray<FName> LevelNames)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::White, TEXT("Load"));
 	for (FName LevelName : LevelNames)
 	{
 		const ULevelStreaming* Streaming = UGameplayStatics::GetStreamingLevel(World, LevelName);
 			
 		if(!Streaming) continue;
 		if(Streaming->IsLevelLoaded()) continue;
-		GEngine->AddOnScreenDebugMessage(-1, 3, FColor::White, TEXT("NotLoaded"));
 			
 		FLatentActionInfo LatentInfo;
 		UGameplayStatics::LoadStreamLevel(World, LevelName, true, true, LatentInfo);
@@ -97,7 +111,6 @@ void ACheckPoint::StreamLevels(UWorld* World, TArray<FName> LevelNames)
 
 void ACheckPoint::UnloadLevels(UWorld* World, TArray<FName> LevelNames)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::White, TEXT("UnLoad"));
 	for (FName LevelName : LevelNames)
 	{
 		const ULevelStreaming* Streaming = UGameplayStatics::GetStreamingLevel(World, LevelName);
