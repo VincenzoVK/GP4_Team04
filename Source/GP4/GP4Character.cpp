@@ -9,6 +9,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "GP4_GameInstance.h"
 #include "Hoverable.h"
 #include "Interactables/CheckPoint.h"
 #include "Kismet/GameplayStatics.h"
@@ -77,8 +78,18 @@ void AGP4Character::BeginPlay()
 		}
 	}
 
-	CurrentCheckPoint = GetCheckPointByIndex(0);
-	CurrentCheckPoint->LoadLevel(this);
+	UGP4_GameInstance* GameInstance = Cast<UGP4_GameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (GameInstance && GameInstance->LoadGame())
+	{
+		if(GameInstance->CurrentSaveGame)
+		{
+			int Index = GameInstance->CurrentSaveGame->RoomIndex;
+
+			CurrentCheckPoint = GetCheckPointByIndex(Index);
+			CurrentCheckPoint->LoadLevel(this);
+			SetActorLocation(CurrentCheckPoint->GetActorLocation());
+		}
+	}
 }
 
 void AGP4Character::Tick(float DeltaSeconds)

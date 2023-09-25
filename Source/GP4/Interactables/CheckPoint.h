@@ -39,9 +39,6 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "GP4")
 	void ReLoadLevel(AGP4Character* Character);
-	
-	UFUNCTION(BlueprintCallable, Category = "GP4")
-	void StreamLevels(UWorld* World, TArray<FName> LevelNames);
 
 	UFUNCTION()
 	void StreamLastLevel();
@@ -51,4 +48,6 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void LoadLevelByName();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnReachCheckPoint();
 };
