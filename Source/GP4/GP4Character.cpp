@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Hoverable.h"
+#include "Interactables/CheckPoint.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/TweakAbility.h"
 #include "Utils/TweakSubSystem.h"
@@ -75,6 +76,9 @@ void AGP4Character::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	CurrentCheckPoint = GetCheckPointByIndex(0);
+	CurrentCheckPoint->LoadLevel(this);
 }
 
 void AGP4Character::Tick(float DeltaSeconds)
@@ -90,6 +94,22 @@ void AGP4Character::Tick(float DeltaSeconds)
 		EmptyHoverables();
 	}
 }
+
+ACheckPoint* AGP4Character::GetCheckPointByIndex(int index)
+{
+	TArray<AActor*> CheckPoints;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ACheckPoint::StaticClass(), CheckPoints);
+
+	for (AActor* Actor : CheckPoints)
+	{
+		ACheckPoint* CheckPoint = Cast<ACheckPoint>(Actor);
+		if(CheckPoint->Index == index)
+			return CheckPoint;
+	}
+
+	return nullptr;
+}
+
 
 void AGP4Character::CheckHoverable()
 {

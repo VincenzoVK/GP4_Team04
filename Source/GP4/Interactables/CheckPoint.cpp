@@ -46,9 +46,7 @@ void ACheckPoint::LoadLevel(AGP4Character* Character)
 	}
 	if(Character->CurrentCheckPoint)
 	{
-		StreamLevels(Character->GetWorld(), Character->CurrentCheckPoint->PreviousLevels);
-		StreamLevels(Character->GetWorld(), Character->CurrentCheckPoint->CurrentLevels);
-		StreamLevels(Character->GetWorld(), Character->CurrentCheckPoint->NextLevels);
+		LoadLevelByName();
 	}
 }
 
@@ -97,16 +95,7 @@ void ACheckPoint::StreamLastLevel()
 
 void ACheckPoint::StreamLevels(UWorld* World, TArray<FName> LevelNames)
 {
-	for (FName LevelName : LevelNames)
-	{
-		const ULevelStreaming* Streaming = UGameplayStatics::GetStreamingLevel(World, LevelName);
-			
-		if(!Streaming) continue;
-		if(Streaming->IsLevelLoaded()) continue;
-			
-		FLatentActionInfo LatentInfo;
-		UGameplayStatics::LoadStreamLevel(World, LevelName, true, true, LatentInfo);
-	}
+	
 }
 
 void ACheckPoint::UnloadLevels(UWorld* World, TArray<FName> LevelNames)

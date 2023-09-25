@@ -107,8 +107,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void ReceiveTweak(UTweak* Tweak);
 
+	UFUNCTION(BlueprintCallable)
+	ACheckPoint* GetCheckPointByIndex(int index);
+
 	UPROPERTY(BlueprintAssignable)
 	FCheckSizeChanged OnCheckSizeChanged;
 	
 };
+
+
+
+
 
