@@ -79,6 +79,10 @@ public:
 	bool IsSelectPressed;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool IsMultiSelectPressed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool StartFromCheckPoint = true;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int StartCheckPoint = -1;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Bitmask, BitmaskEnum = ETweakType))
 	int32 TweakFlags;
 	UPROPERTY(BlueprintReadWrite)

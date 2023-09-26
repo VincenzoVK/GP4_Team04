@@ -84,10 +84,15 @@ void AGP4Character::BeginPlay()
 		if(GameInstance->CurrentSaveGame)
 		{
 			int Index = GameInstance->CurrentSaveGame->RoomIndex;
+			if(StartCheckPoint != -1)
+				Index = StartCheckPoint;
 
 			CurrentCheckPoint = GetCheckPointByIndex(Index);
-			CurrentCheckPoint->LoadLevel(this);
-			SetActorLocation(CurrentCheckPoint->GetActorLocation());
+			if(StartFromCheckPoint)
+			{
+				CurrentCheckPoint->LoadLevel(this);
+				SetActorLocation(CurrentCheckPoint->GetActorLocation());
+			}
 		}
 	}
 }
