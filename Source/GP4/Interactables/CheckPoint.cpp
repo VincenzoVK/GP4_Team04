@@ -54,7 +54,8 @@ void ACheckPoint::LoadLevel(AGP4Character* Character)
 {
 	if(Character->PreviousCheckPoint)
 	{
-		UnloadLevels(Character->GetWorld(), Character->PreviousCheckPoint->PreviousLevels);
+		//UnloadLevels(Character->GetWorld(), Character->PreviousCheckPoint->PreviousLevels);
+		UnLoadLevelByName(Character);
 	}
 	if(Character->CurrentCheckPoint)
 	{
@@ -82,27 +83,30 @@ void ACheckPoint::ReLoadLevel(AGP4Character* Character)
 	NewCharacter->CurrentCheckPoint = Current;
 	UGameplayStatics::GetPlayerController(World, 0)->Possess(NewCharacter);
 
+	LastLevelIndex = 0;
 	for (FName LevelName : Current->CurrentLevels)
 	{
-		const ULevelStreaming* Streaming = UGameplayStatics::GetStreamingLevel(World, LevelName);
+		ULevelStreaming* Streaming = UGameplayStatics::GetStreamingLevel(World, LevelName);
 			
 		if(!Streaming) continue;
-		if(!Streaming->IsLevelVisible()) continue;
 
-		LastLevel = LevelName;
-		FLatentActionInfo LatentInfo;
-		LatentInfo.CallbackTarget = this;
-		LatentInfo.ExecutionFunction = FName("StreamLastLevel");
-		LatentInfo.UUID = 0;
-		LatentInfo.Linkage = 0;
-		UGameplayStatics::UnloadStreamLevel(World, LevelName, LatentInfo, false);
+		Streaming->OnLevelUnloaded.Clear();
+		Streaming->SetShouldBeLoaded(false);
+		Streaming->SetShouldBeVisible(false);
+		Streaming->OnLevelUnloaded.AddDynamic(this, &ACheckPoint::StreamLastLevel);
 	}
 }
 
 void ACheckPoint::StreamLastLevel()
 {
-	FLatentActionInfo LatentInfo;
-	UGameplayStatics::LoadStreamLevel(GetWorld(), LastLevel, true, false, LatentInfo);
+	FName LastLevel = CurrentLevels[LastLevelIndex];
+	ULevelStreaming* Streaming = UGameplayStatics::GetStreamingLevel(GetWorld(), LastLevel);
+			
+	if(!Streaming) return;
+
+	Streaming->SetShouldBeLoaded(true);
+	Streaming->SetShouldBeVisible(true);
+	LastLevelIndex++;
 }
 
 void ACheckPoint::UnloadLevels(UWorld* World, TArray<FName> LevelNames)

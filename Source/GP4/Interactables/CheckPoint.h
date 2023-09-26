@@ -28,7 +28,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	FName LastLevel;
+	int LastLevelIndex;
 
 public:
 	virtual void Tick(float DeltaTime) override;
@@ -48,6 +48,10 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void LoadLevelByName();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UnLoadLevelByName(AGP4Character* Character);
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ReLoadFromCheckPoint();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void OnReachCheckPoint();
 };
