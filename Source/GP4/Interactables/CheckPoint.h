@@ -29,6 +29,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	int LastLevelIndex;
+	UPROPERTY()
+	AGP4Character* CurrentCharacter;
 
 public:
 	virtual void Tick(float DeltaTime) override;
