@@ -13,7 +13,7 @@ struct FNarrativeInfo : public FTableRowBase
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FName ID;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(MultiLine=true))
 	FString Subtitle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
