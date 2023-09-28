@@ -68,9 +68,27 @@ void ACheckPoint::ReLoadLevel(AGP4Character* Character)
 	if(!Character)
 		return;
 
+
 	CurrentCharacter = Character;
 	ACheckPoint* Current = Character->CurrentCheckPoint;
+	ACheckPoint* Prev = CurrentCharacter->PreviousCheckPoint;
 	UWorld* World = Character->GetWorld();
+
+	if(Index == 0)
+	{
+		UClass* CharacterClass = CurrentCharacter->GetClass();
+		const FVector RespawnLocation = CurrentCharacter->CurrentCheckPoint->GetActorLocation() + FVector::UpVector * 300;
+		const FRotator RespawnRotation = CurrentCharacter->CurrentCheckPoint->GetActorRotation();
+
+		CurrentCharacter->Destroy();
+		const FActorSpawnParameters SpawnParams;
+		AGP4Character* NewCharacter = World->SpawnActor<AGP4Character>(CharacterClass, RespawnLocation, RespawnRotation, SpawnParams);
+		NewCharacter->PreviousCheckPoint = Prev;
+		NewCharacter->CurrentCheckPoint = Current;
+		UGameplayStatics::GetPlayerController(World, 0)->Possess(NewCharacter);
+		CurrentCharacter = NewCharacter;
+		return;		
+	}
 	
 	LastLevelIndex = 0;
 	for (FName LevelName : Current->CurrentLevels)
