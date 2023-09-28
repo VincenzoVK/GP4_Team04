@@ -92,6 +92,7 @@ void AGP4Character::BeginPlay()
 			{
 				CurrentCheckPoint->LoadLevel(this);
 				SetActorLocation(CurrentCheckPoint->GetActorLocation());
+				SetActorRotation(CurrentCheckPoint->GetActorRotation());
 			}
 		}
 	}
