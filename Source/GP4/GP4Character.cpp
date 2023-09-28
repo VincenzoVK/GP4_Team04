@@ -152,7 +152,7 @@ void AGP4Character::CheckHoverable()
 	FQuat Orientation = FRotator(0, 0, 0).Quaternion();
 	FCollisionShape CollisionShape = FCollisionShape::MakeBox(BoxHalfSize);
 
-	DrawDebugBox(GetWorld(), EndLocation, BoxHalfSize, ViewRotation.Quaternion(), FColor::Red);
+	//DrawDebugBox(GetWorld(), EndLocation, BoxHalfSize, ViewRotation.Quaternion(), FColor::Red);
 	// Perform the line trace
 	if (GetWorld()->SweepMultiByChannel(HitResults, EndLocation, EndLocation, ViewRotation.Quaternion(), ECC_Visibility,
 	                                    CollisionShape, CollisionParams))
