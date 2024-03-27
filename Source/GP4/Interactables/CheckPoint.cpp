@@ -41,6 +41,12 @@ void ACheckPoint::NotifyActorBeginOverlap(AActor* OtherActor)
 				if(GameInstance->CurrentSaveGame)
 				{
 					GameInstance->CurrentSaveGame->RoomIndex = Index;
+					GameInstance->CurrentSaveGame->CanAim = Character->CanAim;
+					GameInstance->CurrentSaveGame->CanTweak = Character->CanTweak;
+					GameInstance->CurrentSaveGame->CanTweakSelf = Character->CanTweakSelf;
+					GameInstance->CurrentSaveGame->CanFriction = Character->CanFriction;
+					GameInstance->CurrentSaveGame->CanGravity = Character->CanGravity;
+					GameInstance->CurrentSaveGame->CanSize = Character->CanSize;
 					GameInstance->SaveGame();
 					GEngine->AddOnScreenDebugMessage(-1, 3, FColor::White, FString::FromInt(Index));
 				}
@@ -72,7 +78,14 @@ void ACheckPoint::ReLoadLevel(AGP4Character* Character)
 	CurrentCharacter = Character;
 	ACheckPoint* Current = Character->CurrentCheckPoint;
 	ACheckPoint* Prev = CurrentCharacter->PreviousCheckPoint;
+	bool CanTweak = CurrentCharacter->CanTweak;
+	bool CanTweakSelf = CurrentCharacter->CanTweakSelf;
+	bool CanGravity = CurrentCharacter->CanGravity;
+	bool CanSize = CurrentCharacter->CanSize;
+	bool CanAim = CurrentCharacter->CanAim;
+	bool CanFriction = CurrentCharacter->CanFriction;
 	UWorld* World = Character->GetWorld();
+	
 
 	if(Index == 0)
 	{
@@ -85,11 +98,18 @@ void ACheckPoint::ReLoadLevel(AGP4Character* Character)
 		AGP4Character* NewCharacter = World->SpawnActor<AGP4Character>(CharacterClass, RespawnLocation, RespawnRotation, SpawnParams);
 		NewCharacter->PreviousCheckPoint = Prev;
 		NewCharacter->CurrentCheckPoint = Current;
+		NewCharacter->CanTweak = CanTweak;
+		NewCharacter->CanTweakSelf = CanTweakSelf;
+		NewCharacter->CanGravity = CanGravity;
+		NewCharacter->CanSize = CanSize;
+		NewCharacter->CanAim = CanAim;
+		NewCharacter->CanFriction = CanFriction;
 		UGameplayStatics::GetPlayerController(World, 0)->Possess(NewCharacter);
 		CurrentCharacter = NewCharacter;
 		return;		
 	}
-	
+
+	OnReloadStarted();
 	LastLevelIndex = 0;
 	for (FName LevelName : Current->CurrentLevels)
 	{
@@ -118,6 +138,12 @@ void ACheckPoint::StreamLastLevel()
 	{
 		ACheckPoint* Prev = CurrentCharacter->PreviousCheckPoint;
 		ACheckPoint* Current = CurrentCharacter->CurrentCheckPoint;
+		bool CanTweak = CurrentCharacter->CanTweak;
+		bool CanTweakSelf = CurrentCharacter->CanTweakSelf;
+		bool CanGravity = CurrentCharacter->CanGravity;
+		bool CanSize = CurrentCharacter->CanSize;
+		bool CanAim = CurrentCharacter->CanAim;
+		bool CanFriction = CurrentCharacter->CanFriction;
 		UWorld* World = CurrentCharacter->GetWorld();
 		
 		UClass* CharacterClass = CurrentCharacter->GetClass();
@@ -129,8 +155,17 @@ void ACheckPoint::StreamLastLevel()
 		AGP4Character* NewCharacter = World->SpawnActor<AGP4Character>(CharacterClass, RespawnLocation, RespawnRotation, SpawnParams);
 		NewCharacter->PreviousCheckPoint = Prev;
 		NewCharacter->CurrentCheckPoint = Current;
+		NewCharacter->CanTweak = CanTweak;
+		NewCharacter->CanTweakSelf = CanTweakSelf;
+		NewCharacter->CanGravity = CanGravity;
+		NewCharacter->CanSize = CanSize;
+		NewCharacter->CanAim = CanAim;
+		NewCharacter->CanFriction = CanFriction;
 		UGameplayStatics::GetPlayerController(World, 0)->Possess(NewCharacter);
 		CurrentCharacter = NewCharacter;
+
+		Streaming->OnLevelLoaded.Clear();
+		Streaming->OnLevelLoaded.AddDynamic(this, &ACheckPoint::OnReloadEnded);
 	}
 	
 	LastLevelIndex++;

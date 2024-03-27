@@ -13,5 +13,12 @@ UCLASS()
 class GP4_API AGP4PlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isUsingGamepad;
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void DetectGamepad();
 	
 };

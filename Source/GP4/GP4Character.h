@@ -95,6 +95,18 @@ public:
 	FVector BoxHalfSize = FVector(1100.f, 2000.f, 500.f);
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float BoxCheckDistance = 1100.f;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanTweak;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanTweakSelf;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanGravity;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanSize;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanAim;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanFriction;
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/

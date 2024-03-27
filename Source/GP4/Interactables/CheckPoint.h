@@ -56,4 +56,9 @@ public:
 	void ReLoadFromCheckPoint();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void OnReachCheckPoint();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnReloadStarted();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnReloadEnded();
 };

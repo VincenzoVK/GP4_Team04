@@ -9,7 +9,7 @@ class UBlackboardComponent;
 
 bool URandomChanceDecorator::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
 {
-	float randomNumber = FMath::RandRange(0.0f, 100.0f);
+	float randomNumber = FMath::RandRange(30.0f, 100.0f);
 
 	bool bSuccess = randomNumber <= SuccessChance; 
 	

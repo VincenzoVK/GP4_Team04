@@ -23,6 +23,19 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int RoomIndex = 0;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanTweak;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanTweakSelf;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanGravity;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanSize;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanAim;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool CanFriction;
 	
 	void CreateSlot(const FString& SlotName)
 	{
